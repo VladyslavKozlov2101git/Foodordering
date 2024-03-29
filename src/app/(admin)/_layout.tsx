@@ -20,8 +20,13 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-      }}>
+        tabBarActiveTintColor: Colors.light.background,
+        tabBarInactiveTintColor: 'gainsboro',
+        tabBarStyle: {
+          backgroundColor: Colors.light.tint,
+        },
+      }}
+    >
       <Tabs.Screen name="index" options={{ href: null }} />
 
       <Tabs.Screen
@@ -29,7 +34,9 @@ export default function TabLayout() {
         options={{
           title: 'Menu',
           headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="cutlery" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="cutlery" color={color} />
+          ),
         }}
       />
       <Tabs.Screen

@@ -21,7 +21,8 @@ export default function MenuStack() {
             </Pressable>
           </Link>
         ),
-      }}>
+      }}
+    >
       <Stack.Screen name="index" options={{ title: 'Menu' }} />
     </Stack>
   );
