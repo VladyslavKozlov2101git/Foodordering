@@ -2,7 +2,15 @@ import Button from '@/components/Button';
 import { defaultPizzaImage } from '@/components/ProductListItem';
 import Colors from '@/constants/Colors';
 import { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Image } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Image,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Stack } from 'expo-router';
 
@@ -16,6 +24,12 @@ const CreateProductScreen = () => {
     setName('');
     setPrice('');
   };
+
+  const DismissKeyboard = ({ children }: any) => (
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} accessible={false}>
+      {children}
+    </TouchableWithoutFeedback>
+  );
 
   const validateInput = () => {
     setErrors('');
@@ -61,29 +75,41 @@ const CreateProductScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Stack.Screen options={{ title: 'Create Product' }} />
+    <DismissKeyboard>
+      <View style={styles.container}>
+        <Stack.Screen options={{ title: 'Create Product' }} />
 
-      <Image source={{ uri: image || defaultPizzaImage }} style={styles.image} />
-      <Text onPress={pickImage} style={styles.textButton}>
-        Select Image
-      </Text>
+        <Image source={{ uri: image || defaultPizzaImage }} style={styles.image} />
+        <Text onPress={pickImage} style={styles.textButton}>
+          Select Image
+        </Text>
 
-      <Text style={styles.label}>Name</Text>
-      <TextInput value={name} onChangeText={setName} placeholder="Name" style={styles.input} />
+        <Text style={styles.label}>Name</Text>
+        <TextInput
+          onBlur={() => console.log('onBlur')}
+          value={name}
+          onChangeText={setName}
+          placeholder="Enter the name"
+          style={styles.input}
+          keyboardType="default"
+        />
 
-      <Text style={styles.label}>Price ($)</Text>
-      <TextInput
-        value={price}
-        onChangeText={setPrice}
-        placeholder="9.99"
-        style={styles.input}
-        keyboardType="numeric"
-      />
+        <Text style={styles.label}>Price ($)</Text>
 
-      <Text style={{ color: 'red' }}>{errors}</Text>
-      <Button onPress={onCreate} text="Create" />
-    </View>
+        <TextInput
+          onBlur={() => console.log('onBlur')}
+          value={price}
+          onChangeText={setPrice}
+          placeholder="9.99"
+          style={styles.input}
+          keyboardType="numeric"
+        />
+
+        <Text style={{ color: 'red' }}>{errors}</Text>
+
+        <Button onPress={onCreate} text="Create" />
+      </View>
+    </DismissKeyboard>
   );
 };
 
